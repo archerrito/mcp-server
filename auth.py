@@ -111,7 +111,7 @@ def create_auth_app() -> Flask:
             MCP_BRIDGE_URL,
             headers={
                 "Content-Type": "application/json",
-                "Authorization": f"Bearer {MCP_BRIDGE_SECRET}",
+                "x-mcp-secret": MCP_BRIDGE_SECRET,
             },
             json={
                 "action": "store_oauth_tokens",
