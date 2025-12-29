@@ -23,7 +23,6 @@ load_dotenv()
 PORT = int(os.environ.get("PORT", 8080))
 MCP_BRIDGE_SECRET = os.environ.get("MCP_BRIDGE_SECRET")
 
-
 def create_mcp_app() -> Flask:
     """Create Flask app for MCP JSON-RPC endpoint."""
     app = Flask(__name__)
@@ -197,9 +196,10 @@ def _jsonrpc_error(code: int, message: str, data: str = None, request_id: Any = 
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
 
+# Create app at module scope so gunicorn can import it
+app = create_mcp_app()
 
 if __name__ == "__main__":
-    app = create_mcp_app()
     print(f"🚀 MCP Gateway starting on port {PORT}")
     print(f"📦 Registered providers: {list(PROVIDERS.keys())}")
     app.run(host="0.0.0.0", port=PORT, debug=False)
