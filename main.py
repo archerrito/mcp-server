@@ -144,7 +144,7 @@ def handle_tools_call(params: Dict[str, Any]) -> Dict[str, Any]:
     """
     tool_name = params.get("name")
     arguments = params.get("arguments", {})
-    credentials = params.get("_credentials", {})
+    credentials = arguments.get("_credentials", {})
     
     if not tool_name:
         raise ValueError("Tool name is required")
