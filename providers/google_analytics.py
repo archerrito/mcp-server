@@ -35,9 +35,9 @@ class GoogleAnalyticsProvider(MCPProvider):
         super().__init__(access_token, credentials)
         self._admin_client = None
         self._data_client = None
-    
+
     def _get_credentials(self) -> Credentials:
-    """Build Google credentials from access token."""
+    """Build Google credentials from access token."""  # ← Must be indented
     if not self.access_token:
         raise ValueError("No access token provided")
     
@@ -49,7 +49,6 @@ class GoogleAnalyticsProvider(MCPProvider):
         client_secret=self.credentials.get("client_secret"),
     )
     
-    # Refresh if expired
     if creds.expired and creds.refresh_token:
         from google.auth.transport.requests import Request
         creds.refresh(Request())
