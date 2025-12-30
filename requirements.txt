@@ -5,3 +5,4 @@ google-auth>=2.25.0
 google-analytics-admin>=0.22.0
 google-analytics-data>=0.18.0
 gunicorn>=21.0.0
+google-auth-httplib2>=0.1.0
