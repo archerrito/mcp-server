@@ -37,17 +37,24 @@ class GoogleAnalyticsProvider(MCPProvider):
         self._data_client = None
     
     def _get_credentials(self) -> Credentials:
-        """Build Google credentials from access token."""
-        if not self.access_token:
-            raise ValueError("No access token provided")
-        
-        return Credentials(
-            token=self.access_token,
-            refresh_token=self.credentials.get("refresh_token"),
-            token_uri="https://oauth2.googleapis.com/token",
-            client_id=self.credentials.get("client_id"),
-            client_secret=self.credentials.get("client_secret"),
-        )
+    """Build Google credentials from access token."""
+    if not self.access_token:
+        raise ValueError("No access token provided")
+    
+    creds = Credentials(
+        token=self.access_token,
+        refresh_token=self.credentials.get("refresh_token"),
+        token_uri="https://oauth2.googleapis.com/token",
+        client_id=self.credentials.get("client_id"),
+        client_secret=self.credentials.get("client_secret"),
+    )
+    
+    # Refresh if expired
+    if creds.expired and creds.refresh_token:
+        from google.auth.transport.requests import Request
+        creds.refresh(Request())
+    
+    return creds
     
     def _get_admin_client(self) -> AnalyticsAdminServiceClient:
         """Get or create Analytics Admin API client."""
