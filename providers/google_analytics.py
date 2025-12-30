@@ -37,7 +37,7 @@ class GoogleAnalyticsProvider(MCPProvider):
         self._data_client = None
 
     def _get_credentials(self) -> Credentials:
-    """Build Google credentials from access token."""  # ← Must be indented
+    """Build Google credentials from access token."""
     if not self.access_token:
         raise ValueError("No access token provided")
     
@@ -54,6 +54,7 @@ class GoogleAnalyticsProvider(MCPProvider):
         creds.refresh(Request())
     
     return creds
+
     
     def _get_admin_client(self) -> AnalyticsAdminServiceClient:
         """Get or create Analytics Admin API client."""
