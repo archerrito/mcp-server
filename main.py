@@ -175,9 +175,9 @@ def handle_tools_call(params: Dict[str, Any]) -> Dict[str, Any]:
     tool = provider.get_tool_by_name(actual_tool_name)
     if not tool:
         raise ValueError(f"Unknown tool: {actual_tool_name} for provider {provider_id}")
-    
-    # Execute tool handler
-    result = asyncio.run(tool.handler(**arguments))
+
+    clean_arguments = {k: v for k, v in arguments.items() if not k.startswith("_")}
+    result = asyncio.run(tool.handler(**clean_arguments))
     
     return result
 
